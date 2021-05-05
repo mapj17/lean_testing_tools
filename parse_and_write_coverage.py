@@ -11,11 +11,17 @@ misses = []
 lines = [line.strip('\n') for line in sys.stdin]
 
 for line in lines:
+    print('Reading line: ' + line)
     m = re.match('(?P<file>\S+)\s*(?P<statements>\S+)\s*(?P<misses>\S+)\s+(?P<coverage>\d+)%',line)
     field_names.append(m.group('file'))
     statements.append(int(m.group('statements')))
     misses.append(int(m.group('misses')))
     coverage_values.append(int(m.group('coverage')) / 100)
+print('Before aggregation we have: ')
+print(field_names)
+print(statements)
+print(misses)
+print(coverage_values)
 field_names.append('TOTAL')
 coverage_values.append(round((sum(statements) - sum(misses))/sum(statements), 2))
 
